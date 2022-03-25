@@ -1,25 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react'
+import './App.css'
+import Grocery from './grocery'
+import groceries from './groceries'
 
-function App() {
+const App = () => {
+  
+  const [grList, setGrList] = useState(groceries)
+
+  const addItem = e => {
+    e.preventDefault()
+    setGrList(grList.concat([{
+      item: document.querySelector('input[name="item"]').value,
+      brand: document.querySelector('input[name="brand"]').value,
+      units: document.querySelector('input[name="units"]').value,
+      quantity: document.querySelector('input[name="quantity"]').value,
+      isPurchased: false
+    }]))
+  }
+  
+  useEffect(() => {
+    document.querySelector('#btn').addEventListener('click', addItem)
+    document.querySelector('input[name="item"]').value = null
+    document.querySelector('input[name="brand"]').value = null
+    document.querySelector('input[name="units"]').value = null
+    document.querySelector('input[name="quantity"]').value = null
+    return () => document.removeEventListener('click', addItem)
+  }, [grList])
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Groceries List</h1>
+      <form>
+        <input type = 'text' name = 'item' placeholder = 'Item' />
+        <input type = 'text' name = 'brand' placeholder = 'Brand' />
+        <input type = 'text' name = 'units' placeholder = 'Units' />
+        <input type = 'text' name = 'quantity' placeholder = 'Quantity' />
+        <input type = 'submit' id = 'btn' />
+      </form>
+      <div id = 'container'>
+        {
+          grList.map((grocery, i) => {
+            return <div key = {i}>{!grocery.isPurchased && <Grocery g = {grocery}/>}</div>
+          })
+        }
+      </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
