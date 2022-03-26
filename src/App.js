@@ -41,7 +41,7 @@ const App = () => {
       <div id = 'container'>
         {
           grList.map((grocery, i) => {
-            return <div key = {i}>{!grocery.isPurchased && <Grocery g = {grocery}/>}</div>
+            return !grocery.isPurchased && <Grocery g = {grocery} key = {i}/>
           })
         }
       </div>
