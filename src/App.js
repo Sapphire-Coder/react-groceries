@@ -20,10 +20,6 @@ const App = () => {
   
   useEffect(() => {
     document.querySelector('#btn').addEventListener('click', addItem)
-    document.querySelector('input[name="item"]').value = null
-    document.querySelector('input[name="brand"]').value = null
-    document.querySelector('input[name="units"]').value = null
-    document.querySelector('input[name="quantity"]').value = null
     return () => document.removeEventListener('click', addItem)
   }, [grList])
 
